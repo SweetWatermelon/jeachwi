@@ -14,6 +14,8 @@ def index(request):
     else:
         return render(request, 'index.html', { 'email': request.session.get('user') })
 
+def serving_exam(request):
+    return render(request, 'page/serving_exam.html')
 
 class RegisterView(FormView):
     template_name = 'register.html'
@@ -47,3 +49,4 @@ def logout(request):
         del(request.session['user'])
 
     return redirect('/')
+
