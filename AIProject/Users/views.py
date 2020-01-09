@@ -17,6 +17,11 @@ def index(request):
 def serving_exam(request):
     return render(request, 'page/serving_exam.html')
 
+
+def jmpark(request):
+    return render(request, 'page/jmpark.html')
+
+
 class RegisterView(FormView):
     template_name = 'register.html'
     form_class = RegisterForm
