@@ -7,6 +7,9 @@ from .models import Users
 
 import requests
 import json
+from django.conf import settings
+
+SERVING_IP = getattr(settings, "SERVING_IP", None)
 
 # Create your views here.
 
@@ -30,7 +33,7 @@ def serving_exam(request):
             return render(request, 'page/serving_sample.html')
 
         x_pred_load = {"instances": x_pred_list} #[1.0, 2.0, 5.0]
-        r = requests.post(' http://localhost:8501/v1/models/half_plus_two:predict', json=x_pred_load)
+        r = requests.post(SERVING_IP, json=x_pred_load)
         y_pred = json.loads(r.content.decode('utf-8'))
         y_pred = y_pred['predictions']
 

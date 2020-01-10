@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'b8c#y#r^wf52vd5lz58wu(z9_5qn@t7@87b5k7_42dwk_n=5z&'
+SERVING_IP = 'http://localhost:8501/v1/models/half_plus_two:predict'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
