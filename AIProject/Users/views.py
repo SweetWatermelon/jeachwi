@@ -5,6 +5,8 @@ from django.contrib.auth.hashers import make_password
 from .forms import RegisterForm, LoginForm
 from .models import Users
 
+import requests
+import json
 
 # Create your views here.
 
@@ -15,7 +17,34 @@ def index(request):
         return render(request, 'index.html', { 'email': request.session.get('user') })
 
 def serving_exam(request):
+
+    x_pred_list = []
+    key_search = ['x_pred1', 'x_pred2', 'x_pred3']
+    
+    if request.method == 'POST':
+        for k, v in request.POST.items():
+            if k in key_search and v != '':
+                x_pred_list.append(float(v))
+
+        if len(x_pred_list) == 0 :
+            return render(request, 'page/serving_sample.html')
+
+        x_pred_load = {"instances": x_pred_list} #[1.0, 2.0, 5.0]
+        r = requests.post(' http://localhost:8501/v1/models/half_plus_two:predict', json=x_pred_load)
+        y_pred = json.loads(r.content.decode('utf-8'))
+        y_pred = y_pred['predictions']
+
+        context = {
+            'result': y_pred,
+        }
+
+        return render(request, 'page/serving_sample.html', context)
+
+    elif request.method == 'GET':
+        return render(request, 'page/serving_sample.html')
+
     return render(request, 'page/serving_exam.html')
+
 
 
 def jmpark(request):

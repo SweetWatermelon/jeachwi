@@ -23,7 +23,7 @@ urlpatterns = [
     path('', index),
     path('register/', RegisterView.as_view()),
     path('login/', LoginView.as_view()),
-    path('serving/exam/', serving_exam, name='serving_exam'),
+    path('serving/sample/', serving_exam, name='serving_sample'),
     path('jmpark/', jmpark, name='jmpark'),
 
 ]
