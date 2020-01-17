@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect
 from django.views.generic import DetailView
 from django.views.generic.edit import FormView
 from django.contrib.auth.hashers import make_password
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, UploadFileForm
 from .models import Users
+from django import forms
 
 import requests
 import json
 from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 SERVING_IP = getattr(settings, "SERVING_IP", None)
 
@@ -18,6 +20,18 @@ def index(request):
         return redirect('/login')
     else:
         return render(request, 'index.html', { 'email': request.session.get('user') })
+
+def image_cls(request):
+    if request.method == 'POST':
+
+        myfile = request.FILES['file']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'page/image_cls.html', {'uploaded_file_url':uploaded_file_url,'result': '#'})
+
+
+    return render(request, 'page/image_cls.html')
 
 def serving_exam(request):
 
@@ -52,7 +66,6 @@ def serving_exam(request):
 
 def jmpark(request):
     return render(request, 'page/jmpark.html')
-
 
 class RegisterView(FormView):
     template_name = 'register.html'

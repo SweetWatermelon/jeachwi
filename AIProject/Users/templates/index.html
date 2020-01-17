@@ -17,7 +17,7 @@
           rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="/static/Users/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/Users/css/sb-admin-2.css" rel="stylesheet">
 
 </head>
 
@@ -111,18 +111,16 @@
             </div>
         </li>
 
-        <!-- Nav Item - 노종현 -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-people-carry"></i>
-                <span>노종현</span></a>
-        </li>
-
-        <!-- Nav Item - 반종옥 -->
         <li class="nav-item">
             <a class="nav-link" href="{% url 'serving_sample' %}">
                 <i class="fas fa-fw fa-arrow-alt-circle-right"></i>
                 <span>Serving Sample</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'image_cls' %}">
+                <i class="fas fa-fw fa-arrow-alt-circle-right"></i>
+                <span>Classification</span></a>
         </li>
 
         <!-- Nav Item - 박주미 -->
@@ -440,7 +438,7 @@
 <script src="/static/Users/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="/static/Users/js/sb-admin-2.min.js"></script>
+<script src="/static/Users/js/sb-admin-2.js"></script>
 
 <!-- Page level plugins -->
 <script src="/static/Users/vendor/chart.js/Chart.min.js"></script>

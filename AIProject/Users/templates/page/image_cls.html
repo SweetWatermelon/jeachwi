@@ -1,0 +1,87 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">이미지 분류</h1>
+    <!--<form action="" method="POST" class="form-horizontal">-->
+
+
+    <div class="row">
+        <div class="ml-1 col-sm-6">
+            <div id="msg"></div>
+            <form method="post" id="image-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="file" class="file" accept="image/*" onchange="form.submit()">
+                <div class="input-group my-3">
+                    <input type="text" class="form-control" disabled placeholder="Upload File"
+                           id="file">
+                    <div class="input-group-append">
+                        <button type="button" class="browse btn btn-primary">Browse...</button>
+                        &nbsp;&nbsp;
+                        <!--<button type="submit" class="btn btn-primary btn" style="float: right;">submit</button>-->
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="col-lg-6">
+            <!-- Circle Buttons -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Preview</h6>
+                </div>
+                <div class="card-body">
+                    <div class="ml-2 col-sm-12">
+                        {% if uploaded_file_url %}
+                        <img src="{{ uploaded_file_url }}" class="img-thumbnail">
+                        {% else %}
+                        <img src="https://placehold.it/250x250" id="preview" class="img-thumbnail">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Prediction</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">label</th>
+                            <th scope="col">score</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>{{ result }}</td>
+                            <td>{{ result }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>{{ result }}</td>
+                            <td>{{ result }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>{{ result }}</td>
+                            <td>{{ result }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--</form>-->
+</div>
+
+
+{% endblock %}

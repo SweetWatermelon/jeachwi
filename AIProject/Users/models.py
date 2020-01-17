@@ -20,3 +20,7 @@ class Users(models.Model):
         db_table = 'Users'
         verbose_name = '사용자'
         verbose_name_plural = '사용자'
+
+# class UploadFileModel(models.Model):
+#     title = models.TextField(default='')
+#     file = models.FileField(null=True)

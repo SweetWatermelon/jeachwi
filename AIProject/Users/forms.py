@@ -69,3 +69,17 @@ class LoginForm(forms.Form):
 
             if not check_password(password, user.password):
                 self.add_error('password', '비밀번호를 틀렸습니다')
+
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(required=False)
+    file = forms.FileField()
+
+# class UploadFileForm(forms.ModelForm):
+#     class Meta:
+#         model = UploadFileModel
+#         fields = ('title', 'file')
+#
+#     def __init__(self, *args, **kwargs):
+#         super(UploadFileForm, self).__init__(*args, **kwargs)
+#         self.fields['file'].required = False
