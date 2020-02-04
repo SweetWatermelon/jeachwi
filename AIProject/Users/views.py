@@ -10,9 +10,11 @@ import requests
 import json
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from .serving import predict
 
 SERVING_IP = getattr(settings, "SERVING_IP", None)
-
+BASE_DIR = getattr(settings, "BASE_DIR", None)
+CLS_SERVING_IP = getattr(settings, "CLS_SERVING_IP", None)
 # Create your views here.
 
 def index(request):
@@ -22,13 +24,17 @@ def index(request):
         return render(request, 'index.html', { 'email': request.session.get('user') })
 
 def image_cls(request):
+
     if request.method == 'POST':
 
         myfile = request.FILES['file']
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
-        return render(request, 'page/image_cls.html', {'uploaded_file_url':uploaded_file_url,'result': '#'})
+        result = predict(CLS_SERVING_IP, BASE_DIR + uploaded_file_url)
+        print(BASE_DIR + uploaded_file_url)
+        return render(request, 'page/image_cls.html', {'uploaded_file_url':uploaded_file_url,'results': result })
+        #result.outputs['classes'].string_val[:3]}
 
 
     return render(request, 'page/image_cls.html')
@@ -37,7 +43,7 @@ def serving_exam(request):
 
     x_pred_list = []
     key_search = ['x_pred1', 'x_pred2', 'x_pred3']
-    
+
     if request.method == 'POST':
         for k, v in request.POST.items():
             if k in key_search and v != '':
@@ -47,7 +53,7 @@ def serving_exam(request):
             return render(request, 'page/serving_sample.html')
 
         x_pred_load = {"instances": x_pred_list} #[1.0, 2.0, 5.0]
-        r = requests.post(SERVING_IP, json=x_pred_load)
+        r = requests.post(SERVING_IP , json=x_pred_load)
         y_pred = json.loads(r.content.decode('utf-8'))
         y_pred = y_pred['predictions']
 
